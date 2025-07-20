@@ -4,3 +4,9 @@
 /Users/Dong/Alloy App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/AccountOpening.csproj.CoreCompileInputs.cache
 /Users/Dong/Alloy App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/AccountOpening.MvcApplicationPartsAssemblyInfo.cache
 /Users/Dong/Alloy App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/AccountOpening.sourcelink.json
+/Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/AccountOpening.GeneratedMSBuildEditorConfig.editorconfig
+/Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/AccountOpening.AssemblyInfoInputs.cache
+/Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/AccountOpening.AssemblyInfo.cs
+/Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/AccountOpening.csproj.CoreCompileInputs.cache
+/Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/AccountOpening.MvcApplicationPartsAssemblyInfo.cache
+/Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/AccountOpening.sourcelink.json
