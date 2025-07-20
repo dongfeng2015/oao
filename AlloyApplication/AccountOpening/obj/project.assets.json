@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/Dong/Alloy Application/AccountOpening/AccountOpening.csproj",
+      "projectUniqueName": "/Users/Dong/Alloy App/oao/Alloy Application/AccountOpening/AccountOpening.csproj",
       "projectName": "AccountOpening",
-      "projectPath": "/Users/Dong/Alloy Application/AccountOpening/AccountOpening.csproj",
+      "projectPath": "/Users/Dong/Alloy App/oao/Alloy Application/AccountOpening/AccountOpening.csproj",
       "packagesPath": "/Users/Dong/.nuget/packages/",
-      "outputPath": "/Users/Dong/Alloy Application/AccountOpening/obj/",
+      "outputPath": "/Users/Dong/Alloy App/oao/Alloy Application/AccountOpening/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/Dong/.nuget/NuGet/NuGet.Config"
