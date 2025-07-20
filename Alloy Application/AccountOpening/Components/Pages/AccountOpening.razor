@@ -1,0 +1,125 @@
+@page "/account-opening"
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components
+@using System.ComponentModel.DataAnnotations
+
+<PageTitle>Open Account</PageTitle>
+
+<div class="account-opening-form">
+    <h2>Open a New Account</h2>
+    <EditForm Model="formData" OnValidSubmit="NextStep">
+        @if (step == 1)
+        {
+            <div class="form-step">
+                <label>First Name</label>
+                <InputText @bind-Value="formData.FirstName" class="form-input" />
+                <ValidationMessage For="@(() => formData.FirstName)" />
+                <label>Last Name</label>
+                <InputText @bind-Value="formData.LastName" class="form-input" />
+                <ValidationMessage For="@(() => formData.LastName)" />
+                <button type="submit" class="next-btn">Next</button>
+            </div>
+        }
+        else if (step == 2)
+        {
+            <div class="form-step">
+                <label>Address Line 1</label>
+                <InputText @bind-Value="formData.AddressLine1" class="form-input" />
+                <ValidationMessage For="@(() => formData.AddressLine1)" />
+                <label>Address Line 2</label>
+                <InputText @bind-Value="formData.AddressLine2" class="form-input" />
+                <label>City</label>
+                <InputText @bind-Value="formData.City" class="form-input" />
+                <ValidationMessage For="@(() => formData.City)" />
+                <label>State (2-letter code)</label>
+                <InputText @bind-Value="formData.State" class="form-input" maxlength="2" />
+                <ValidationMessage For="@(() => formData.State)" />
+                <label>Zip/Postal Code</label>
+                <InputText @bind-Value="formData.ZipCode" class="form-input" />
+                <ValidationMessage For="@(() => formData.ZipCode)" />
+                <label>Country</label>
+                <InputText @bind-Value="formData.Country" class="form-input" readonly />
+                <ValidationMessage For="@(() => formData.Country)" />
+                <button type="button" class="prev-btn" @onclick="PrevStep">Back</button>
+                <button type="submit" class="next-btn">Next</button>
+            </div>
+        }
+        else if (step == 3)
+        {
+            <div class="form-step">
+                <label>SSN (9 digits, no dashes)</label>
+                <InputText @bind-Value="formData.SSN" class="form-input" maxlength="9" />
+                <ValidationMessage For="@(() => formData.SSN)" />
+                <label>Email Address</label>
+                <InputText @bind-Value="formData.Email" class="form-input" />
+                <ValidationMessage For="@(() => formData.Email)" />
+                <label>Date of Birth (YYYY-MM-DD)</label>
+                <InputText @bind-Value="formData.DateOfBirth" class="form-input" placeholder="YYYY-MM-DD" />
+                <ValidationMessage For="@(() => formData.DateOfBirth)" />
+                <button type="button" class="prev-btn" @onclick="PrevStep">Back</button>
+                <button type="submit" class="submit-btn">Submit</button>
+            </div>
+        }
+        else if (step == 4)
+        {
+            <div class="form-step">
+                <h3>Thank you!</h3>
+                <p>Your application has been submitted.</p>
+            </div>
+        }
+    </EditForm>
+</div>
+
+@code {
+    private int step = 1;
+    private AccountOpeningForm formData = new AccountOpeningForm();
+
+    private void NextStep()
+    {
+        if (step == 2)
+        {
+            formData.Country = "US";
+        }
+        if (step < 4)
+        {
+            step++;
+        }
+    }
+    private void PrevStep()
+    {
+        if (step > 1)
+        {
+            step--;
+        }
+    }
+
+    public class AccountOpeningForm
+    {
+        [Required]
+        public string FirstName { get; set; }
+        [Required]
+        public string LastName { get; set; }
+        [Required]
+        public string AddressLine1 { get; set; }
+        public string AddressLine2 { get; set; }
+        [Required]
+        public string City { get; set; }
+        [Required]
+        [RegularExpression("^[A-Z]{2}$", ErrorMessage = "State must be a two-letter code.")]
+        public string State { get; set; }
+        [Required]
+        public string ZipCode { get; set; }
+        [Required]
+        [CompareTo("US", ErrorMessage = "Country must be US.")]
+        public string Country { get; set; } = "US";
+        [Required]
+        [RegularExpression("^[0-9]{9}$", ErrorMessage = "SSN must be 9 digits.")]
+        public string SSN { get; set; }
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+        [Required]
+        [RegularExpression("^\\d{4}-\\d{2}-\\d{2}$", ErrorMessage = "Date of Birth must be YYYY-MM-DD.")]
+        public string DateOfBirth { get; set; }
+    }
+}
