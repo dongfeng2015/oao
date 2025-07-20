@@ -110,7 +110,7 @@
         [Required]
         public string ZipCode { get; set; }
         [Required]
-        [CompareTo("US", ErrorMessage = "Country must be US.")]
+        [RegularExpression("^US$", ErrorMessage = "Country must be US.")]
         public string Country { get; set; } = "US";
         [Required]
         [RegularExpression("^[0-9]{9}$", ErrorMessage = "SSN must be 9 digits.")]

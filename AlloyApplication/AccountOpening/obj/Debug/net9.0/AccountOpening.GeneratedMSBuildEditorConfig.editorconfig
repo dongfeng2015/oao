@@ -59,7 +59,3 @@ build_metadata.AdditionalFiles.CssScope =
 [/Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/Components/Layout/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9MYXlvdXQvTWFpbkxheW91dC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-qfepnqraxi
-
-[/Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/Components/Layout/NavMenu.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9MYXlvdXQvTmF2TWVudS5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = b-ke89ljyz73
