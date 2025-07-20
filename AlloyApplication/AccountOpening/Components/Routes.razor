@@ -2,10 +2,9 @@
 @using Microsoft.AspNetCore.Components
 @using AccountOpening.Components.Layout
 
-<Router AppAssembly="typeof(Program).Assembly">
+<Router AppAssembly="@typeof(Program).Assembly">
     <Found Context="routeData">
         <RouteView RouteData="routeData" DefaultLayout="typeof(MainLayout)" />
-// ...removed invalid Route tag; routing is handled by @page directive in AccountOpening.razor...
         <FocusOnNavigate RouteData="routeData" Selector="h1" />
     </Found>
 </Router>
