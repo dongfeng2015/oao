@@ -1,13 +1,15 @@
 @page "/account-opening"
+@namespace AccountOpening.Web.Pages
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Components
+@using System.Net.Http
 @using System.ComponentModel.DataAnnotations
 
 <PageTitle>Open Account</PageTitle>
 
 <div class="account-opening-form">
-    <h2>Open a New Account</h2>
-    <EditForm Model="formData" OnValidSubmit="NextStep">
+    <EditForm Model="formData" OnValidSubmit="SubmitFormAsync">
+        <DataAnnotationsValidator />
         @if (step == 1)
         {
             <div class="form-step">
@@ -17,7 +19,7 @@
                 <label>Last Name</label>
                 <InputText @bind-Value="formData.LastName" class="form-input" />
                 <ValidationMessage For="@(() => formData.LastName)" />
-                <button type="submit" class="next-btn">Next</button>
+                <button type="button" class="next-btn" @onclick="NextStep">Next</button>
             </div>
         }
         else if (step == 2)
@@ -41,7 +43,7 @@
                 <InputText @bind-Value="formData.Country" class="form-input" readonly />
                 <ValidationMessage For="@(() => formData.Country)" />
                 <button type="button" class="prev-btn" @onclick="PrevStep">Back</button>
-                <button type="submit" class="next-btn">Next</button>
+                <button type="button" class="next-btn" @onclick="NextStep">Next</button>
             </div>
         }
         else if (step == 3)
@@ -57,7 +59,15 @@
                 <InputText @bind-Value="formData.DateOfBirth" class="form-input" placeholder="YYYY-MM-DD" />
                 <ValidationMessage For="@(() => formData.DateOfBirth)" />
                 <button type="button" class="prev-btn" @onclick="PrevStep">Back</button>
-                <button type="submit" class="submit-btn">Submit</button>
+                <button type="button" class="submit-btn" @onclick="SubmitFormAsync" disabled="@(isSubmitting)">Submit</button>
+                @if (isSubmitting)
+                {
+                    <p>Submitting...</p>
+                }
+                @if (!string.IsNullOrEmpty(submitError))
+                {
+                    <p class="text-danger">@submitError</p>
+                }
             </div>
         }
         else if (step == 4)
@@ -71,8 +81,13 @@
 </div>
 
 @code {
+    [Inject]
+    private HttpClient? Http { get; set; }
+
     private int step = 1;
     private AccountOpeningForm formData = new AccountOpeningForm();
+    private bool isSubmitting = false;
+    private string? submitError;
 
     private void NextStep()
     {
@@ -80,11 +95,12 @@
         {
             formData.Country = "US";
         }
-        if (step < 4)
+        if (step < 3)
         {
             step++;
         }
     }
+
     private void PrevStep()
     {
         if (step > 1)
@@ -93,33 +109,63 @@
         }
     }
 
+    private async Task SubmitFormAsync()
+    {
+        isSubmitting = true;
+        submitError = null;
+        try
+        {
+            if (Http is null)
+            {
+                submitError = "HttpClient is not available.";
+                isSubmitting = false;
+                return;
+            }
+            // Replace with your API endpoint
+            var response = await Http.PostAsJsonAsync("api/accountopening", formData);
+            if (response.IsSuccessStatusCode)
+            {
+                step = 4;
+            }
+            else
+            {
+                submitError = "Submission failed. Please try again.";
+            }
+        }
+        catch (Exception ex)
+        {
+            submitError = $"Error: {ex.Message}";
+        }
+        isSubmitting = false;
+    }
+
     public class AccountOpeningForm
     {
         [Required]
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
         [Required]
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
         [Required]
-        public string AddressLine1 { get; set; }
-        public string AddressLine2 { get; set; }
+        public string? AddressLine1 { get; set; }
+        public string? AddressLine2 { get; set; }
         [Required]
-        public string City { get; set; }
+        public string? City { get; set; }
         [Required]
         [RegularExpression("^[A-Z]{2}$", ErrorMessage = "State must be a two-letter code.")]
-        public string State { get; set; }
+        public string? State { get; set; }
         [Required]
-        public string ZipCode { get; set; }
+        public string? ZipCode { get; set; }
         [Required]
         [RegularExpression("^US$", ErrorMessage = "Country must be US.")]
-        public string Country { get; set; } = "US";
+        public string? Country { get; set; } = "US";
         [Required]
         [RegularExpression("^[0-9]{9}$", ErrorMessage = "SSN must be 9 digits.")]
-        public string SSN { get; set; }
+        public string? SSN { get; set; }
         [Required]
         [EmailAddress]
-        public string Email { get; set; }
+        public string? Email { get; set; }
         [Required]
         [RegularExpression("^\\d{4}-\\d{2}-\\d{2}$", ErrorMessage = "Date of Birth must be YYYY-MM-DD.")]
-        public string DateOfBirth { get; set; }
+        public string? DateOfBirth { get; set; }
     }
 }

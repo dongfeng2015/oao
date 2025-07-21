@@ -1,0 +1,101 @@
+.account-opening-form {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: #fff;
+}
+
+.account-opening-form h2 {
+    color: #000;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    margin-bottom: 2rem;
+    text-align: center;
+    border-bottom: 2px solid #D4AF37;
+    padding-bottom: 1rem;
+}
+
+.form-step {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    background: #fff;
+}
+
+.form-step label {
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 0.25rem;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #D4AF37;
+    background: #fff;
+    color: #000;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+}
+
+.form-input:focus {
+    border-color: #D4AF37;
+    outline: none;
+    box-shadow: 0 0 0 1px #D4AF37;
+}
+
+.form-input[readonly] {
+    background-color: #f8f8f8;
+    cursor: not-allowed;
+}
+
+.validation-message {
+    color: #D4AF37;
+    font-size: 0.85rem;
+    margin-top: -0.5rem;
+}
+
+.form-step .next-btn,
+.form-step .prev-btn,
+.form-step .submit-btn {
+    align-self: flex-end;
+    min-width: 120px;
+}
+
+/* Button container for multiple buttons */
+.form-step > div:last-child {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+/* Thank you step */
+.form-step h3 {
+    color: #000;
+    font-size: 2rem;
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.form-step p {
+    text-align: center;
+    color: #000;
+    font-size: 1.1rem;
+}
+
+.text-danger {
+    color: #D4AF37;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    text-align: center;
+}
+
+/* Loading state */
+.form-step p:has(+ .text-danger) {
+    color: #666;
+    font-style: italic;
+}

@@ -1,8 +1,22 @@
 {
   "version": 2,
-  "dgSpecHash": "IOhjloSoqs4=",
+  "dgSpecHash": "H3z0pPpDSg8=",
   "success": true,
   "projectFilePath": "/Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/AccountOpening.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/Users/Dong/.nuget/packages/microsoft.aspnetcore.authorization/9.0.0-preview.1.24081.5/microsoft.aspnetcore.authorization.9.0.0-preview.1.24081.5.nupkg.sha512",
+    "/Users/Dong/.nuget/packages/microsoft.aspnetcore.components/9.0.0-preview.1.24081.5/microsoft.aspnetcore.components.9.0.0-preview.1.24081.5.nupkg.sha512",
+    "/Users/Dong/.nuget/packages/microsoft.aspnetcore.components.analyzers/9.0.0-preview.1.24081.5/microsoft.aspnetcore.components.analyzers.9.0.0-preview.1.24081.5.nupkg.sha512",
+    "/Users/Dong/.nuget/packages/microsoft.aspnetcore.components.forms/9.0.0-preview.1.24081.5/microsoft.aspnetcore.components.forms.9.0.0-preview.1.24081.5.nupkg.sha512",
+    "/Users/Dong/.nuget/packages/microsoft.aspnetcore.components.web/9.0.0-preview.1.24081.5/microsoft.aspnetcore.components.web.9.0.0-preview.1.24081.5.nupkg.sha512",
+    "/Users/Dong/.nuget/packages/microsoft.aspnetcore.metadata/9.0.0-preview.1.24081.5/microsoft.aspnetcore.metadata.9.0.0-preview.1.24081.5.nupkg.sha512",
+    "/Users/Dong/.nuget/packages/microsoft.extensions.dependencyinjection/9.0.0-preview.1.24080.9/microsoft.extensions.dependencyinjection.9.0.0-preview.1.24080.9.nupkg.sha512",
+    "/Users/Dong/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/9.0.0-preview.1.24080.9/microsoft.extensions.dependencyinjection.abstractions.9.0.0-preview.1.24080.9.nupkg.sha512",
+    "/Users/Dong/.nuget/packages/microsoft.extensions.logging.abstractions/9.0.0-preview.1.24080.9/microsoft.extensions.logging.abstractions.9.0.0-preview.1.24080.9.nupkg.sha512",
+    "/Users/Dong/.nuget/packages/microsoft.extensions.options/9.0.0-preview.1.24080.9/microsoft.extensions.options.9.0.0-preview.1.24080.9.nupkg.sha512",
+    "/Users/Dong/.nuget/packages/microsoft.extensions.primitives/9.0.0-preview.1.24080.9/microsoft.extensions.primitives.9.0.0-preview.1.24080.9.nupkg.sha512",
+    "/Users/Dong/.nuget/packages/microsoft.jsinterop/9.0.0-preview.1.24081.5/microsoft.jsinterop.9.0.0-preview.1.24081.5.nupkg.sha512",
+    "/Users/Dong/.nuget/packages/system.io.pipelines/9.0.0-preview.1.24080.9/system.io.pipelines.9.0.0-preview.1.24080.9.nupkg.sha512"
+  ],
   "logs": []
 }

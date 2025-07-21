@@ -1,0 +1,36 @@
+.nav-section {
+    margin-top: 1rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 1rem;
+}
+
+.nav-section h3 {
+    color: #D4AF37;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+}
+
+.nav-link {
+    color: #fff;
+    transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+    color: #D4AF37;
+}
+
+.nav-link.disabled {
+    color: rgba(255,255,255,0.3);
+    cursor: not-allowed;
+}
+
+.nav-link.active {
+    background-color: rgba(212, 175, 55, 0.1);
+    color: #D4AF37;
+}
+
+.bi {
+    margin-right: 0.5rem;
+}

@@ -1,9 +1,3 @@
-/Users/Dong/Alloy App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/AccountOpening.GeneratedMSBuildEditorConfig.editorconfig
-/Users/Dong/Alloy App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/AccountOpening.AssemblyInfoInputs.cache
-/Users/Dong/Alloy App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/AccountOpening.AssemblyInfo.cs
-/Users/Dong/Alloy App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/AccountOpening.csproj.CoreCompileInputs.cache
-/Users/Dong/Alloy App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/AccountOpening.MvcApplicationPartsAssemblyInfo.cache
-/Users/Dong/Alloy App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/AccountOpening.sourcelink.json
 /Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/AccountOpening.GeneratedMSBuildEditorConfig.editorconfig
 /Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/AccountOpening.AssemblyInfoInputs.cache
 /Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/AccountOpening.AssemblyInfo.cs
@@ -21,6 +15,7 @@
 /Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/bin/Debug/net9.0/AccountOpening.pdb
 /Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/scopedcss/Components/Layout/MainLayout.razor.rz.scp.css
 /Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/scopedcss/Components/Layout/NavMenu.razor.rz.scp.css
+/Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/scopedcss/Components/Pages/AccountOpening.razor.rz.scp.css
 /Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/scopedcss/bundle/AccountOpening.styles.css
 /Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/scopedcss/projectbundle/AccountOpening.bundle.scp.css
 /Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/compressed/mim0s3isxx-nj3nrzv8uz.gz
@@ -68,8 +63,8 @@
 /Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/compressed/a30uymhtir-h1s4sie4z3.gz
 /Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/compressed/3gl9656f3i-63fj8s7r0e.gz
 /Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/compressed/yz38w7arv9-0j3bgjxly4.gz
-/Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/compressed/b9b3gfotv6-kv6phptca3.gz
-/Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/compressed/j4wfifbquf-kv6phptca3.gz
+/Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/compressed/b9b3gfotv6-ml6q7zt2h1.gz
+/Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/compressed/j4wfifbquf-ml6q7zt2h1.gz
 /Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/staticwebassets.build.json
 /Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/staticwebassets.development.json
 /Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/staticwebassets.build.endpoints.json
