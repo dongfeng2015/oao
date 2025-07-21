@@ -12,7 +12,7 @@
 <PageTitle>Open Account</PageTitle>
 
 <div class="account-opening-form">
-    <EditForm EditContext="editContext">
+    <EditForm EditContext="@editContext">
         <DataAnnotationsValidator />
         @if (step == 1)
         {
@@ -23,7 +23,7 @@
                 <label>Last Name</label>
                 <InputText @bind-Value="formData.LastName" class="form-input" @attributes="GetInputClass(() => formData.LastName)" />
                 <ValidationMessage For="@(() => formData.LastName)" />
-                <button type="button" class="next-btn" @onclick="NextStepAsync" disabled="@(isSubmitting)">Next</button>
+                <button type="button" class="next-btn" @onclick="NextStepAsync" disabled="@isSubmitting">Next</button>
             </div>
         }
         else if (step == 2)
@@ -47,7 +47,7 @@
                 <InputText @bind-Value="formData.Country" class="form-input" readonly />
                 <ValidationMessage For="@(() => formData.Country)" />
                 <button type="button" class="prev-btn" @onclick="PrevStep">Back</button>
-                <button type="button" class="next-btn" @onclick="NextStepAsync" disabled="@(isSubmitting)">Next</button>
+                <button type="button" class="next-btn" @onclick="NextStepAsync" disabled="@isSubmitting">Next</button>
             </div>
         }
         else if (step == 3)
@@ -63,7 +63,7 @@
                 <InputText @bind-Value="formData.DateOfBirth" class="form-input" placeholder="YYYY-MM-DD" />
                 <ValidationMessage For="@(() => formData.DateOfBirth)" />
                 <button type="button" class="prev-btn" @onclick="PrevStep">Back</button>
-                <button type="button" class="submit-btn" @onclick="SubmitFormAsync" disabled="@(isSubmitting)">Submit</button>
+                <button type="button" class="submit-btn" @onclick="SubmitFormAsync" disabled="@isSubmitting">Submit</button>
                 @if (isSubmitting)
                 {
                     <p>Submitting...</p>
