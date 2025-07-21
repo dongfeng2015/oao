@@ -99,9 +99,20 @@
     private async Task NextStepAsync()
     {
         submitError = null;
+        // Validate inputs for the current step
         if (!editContext.Validate())
             return;
 
+        // For steps 1 and 2, just advance without calling the API
+        if (step < 3)
+        {
+            if (step == 2)
+                formData.Country = "US";
+            step++;
+            return;
+        }
+
+        // For step 3, save via API then advance
         isSubmitting = true;
         try
         {
@@ -110,22 +121,14 @@
                 submitError = "HttpClient is not available.";
                 return;
             }
-            // Save current step data
             var saveResponse = await Http.PostAsJsonAsync("api/accountopening/save", formData);
             if (!saveResponse.IsSuccessStatusCode)
             {
                 submitError = "Save failed. Please try again.";
                 return;
             }
-
-            if (step == 2)
-            {
-                formData.Country = "US";
-            }
-            if (step < 3)
-            {
-                step++;
-            }
+            // Proceed to final confirmation step
+            step++;
         }
         catch (Exception ex)
         {
