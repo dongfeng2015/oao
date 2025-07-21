@@ -8,7 +8,7 @@
 <PageTitle>Open Account</PageTitle>
 
 <div class="account-opening-form">
-    <EditForm Model="formData" OnValidSubmit="SubmitFormAsync">
+    <EditForm EditContext="editContext">
         <DataAnnotationsValidator />
         @if (step == 1)
         {
@@ -19,7 +19,7 @@
                 <label>Last Name</label>
                 <InputText @bind-Value="formData.LastName" class="form-input" />
                 <ValidationMessage For="@(() => formData.LastName)" />
-                <button type="button" class="next-btn" @onclick="NextStep">Next</button>
+                <button type="button" class="next-btn" @onclick="NextStepAsync" disabled="@(isSubmitting)">Next</button>
             </div>
         }
         else if (step == 2)
@@ -43,7 +43,7 @@
                 <InputText @bind-Value="formData.Country" class="form-input" readonly />
                 <ValidationMessage For="@(() => formData.Country)" />
                 <button type="button" class="prev-btn" @onclick="PrevStep">Back</button>
-                <button type="button" class="next-btn" @onclick="NextStep">Next</button>
+                <button type="button" class="next-btn" @onclick="NextStepAsync" disabled="@(isSubmitting)">Next</button>
             </div>
         }
         else if (step == 3)
@@ -89,15 +89,51 @@
     private bool isSubmitting = false;
     private string? submitError;
 
-    private void NextStep()
+    private EditContext editContext;
+
+    protected override void OnInitialized()
     {
-        if (step == 2)
+        editContext = new EditContext(formData);
+    }
+
+    private async Task NextStepAsync()
+    {
+        submitError = null;
+        if (!editContext.Validate())
+            return;
+
+        isSubmitting = true;
+        try
         {
-            formData.Country = "US";
+            if (Http is null)
+            {
+                submitError = "HttpClient is not available.";
+                return;
+            }
+            // Save current step data
+            var saveResponse = await Http.PostAsJsonAsync("api/accountopening/save", formData);
+            if (!saveResponse.IsSuccessStatusCode)
+            {
+                submitError = "Save failed. Please try again.";
+                return;
+            }
+
+            if (step == 2)
+            {
+                formData.Country = "US";
+            }
+            if (step < 3)
+            {
+                step++;
+            }
         }
-        if (step < 3)
+        catch (Exception ex)
         {
-            step++;
+            submitError = $"Error: {ex.Message}";
+        }
+        finally
+        {
+            isSubmitting = false;
         }
     }
 

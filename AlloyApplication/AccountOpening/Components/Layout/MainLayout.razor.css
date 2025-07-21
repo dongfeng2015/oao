@@ -1,11 +1,23 @@
 /* Main layout: sharp, bold, black & white with gold accent */
+html, body {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    overflow: hidden !important;
+}
+
 .page {
     display: flex;
     flex-direction: row;
-    min-height: 100vh;
+    height: 100vh;
+    width: 100vw;
     background: #fff;
-    color: #111;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    margin: 0;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
 }
 
 .sidebar {
@@ -14,12 +26,17 @@
     color: #fff;
     border-right: 2px solid #D4AF37;
     font-weight: 700;
-    min-height: 100vh;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding-top: 2rem;
+    padding-top: 0;
     box-shadow: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 3000;
+    margin: 0;
 }
 
 main {
@@ -27,13 +44,12 @@ main {
     background: #fff;
     color: #111;
     font-weight: 500;
-    border-radius: 0;
-    box-shadow: none;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
 }
 
 .top-row {
@@ -50,7 +66,8 @@ main {
     z-index: 1;
 }
 
-.top-row ::deep a, .top-row ::deep .btn-link {
+.top-row ::deep a,
+.top-row ::deep .btn-link {
     white-space: nowrap;
     margin-left: 2rem;
     text-decoration: none;
@@ -60,21 +77,15 @@ main {
     transition: border-color 0.2s, color 0.2s;
 }
 
-.top-row ::deep a:hover, .top-row ::deep .btn-link:hover {
+.top-row ::deep a:hover,
+.top-row ::deep .btn-link:hover {
     color: #D4AF37;
     border-bottom: 1px solid #D4AF37;
-}
-
-.top-row ::deep a:first-child {
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 article.content {
     background: #fff;
     color: #111;
-    border-radius: 0;
-    box-shadow: none;
     font-weight: 500;
     padding: 2rem;
     width: 100%;
@@ -86,18 +97,20 @@ article.content {
 }
 
 /* Buttons */
-.next-btn, .prev-btn, .submit-btn {
+.next-btn,
+.prev-btn,
+.submit-btn {
     background: #000;
     color: #fff;
     border: 1px solid #D4AF37;
     font-weight: 700;
-    border-radius: 0;
     padding: 0.75rem 2rem;
     margin: 1rem 0.5rem 0 0;
-    box-shadow: none;
     transition: all 0.2s ease;
 }
-.next-btn:hover, .prev-btn:hover, .submit-btn:hover {
+.next-btn:hover,
+.prev-btn:hover,
+.submit-btn:hover {
     background: #fff;
     color: #000;
     border-color: #000;
@@ -106,13 +119,11 @@ article.content {
 /* Form inputs */
 .form-input {
     border: 1px solid #000;
-    border-radius: 0;
     font-weight: 500;
     padding: 0.75rem;
     margin-bottom: 1rem;
     background: #fff;
     color: #000;
-    box-shadow: none;
 }
 .form-input:focus {
     border-color: #D4AF37;
@@ -142,7 +153,6 @@ article.content {
     background: lightyellow;
     bottom: 0;
     box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
-    box-sizing: border-box;
     display: none;
     left: 0;
     padding: 0.6rem 1.25rem 0.7rem 1.25rem;
@@ -155,4 +165,61 @@ article.content {
     position: absolute;
     right: 0.75rem;
     top: 0.5rem;
+}
+
+/* Progress Bar Styles */
+.progress-bar-container {
+    width: 100%;
+    padding: 0;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+.fixed-progress-bar {
+    position: fixed;
+    top: 0;
+    left: 260px;
+    width: calc(100% - 260px);
+    background: transparent;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.progress-bar {
+    width: 40%;
+    height: 20px;
+    background: #eee;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    margin: 0 auto;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: #FFD600;
+    transition: width 0.3s ease;
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-radius: 10px 0 0 10px;
+    z-index: 2;
+}
+
+.progress-fire {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    pointer-events: none;
+    transition: left 0.3s ease;
+    z-index: 3;
 }

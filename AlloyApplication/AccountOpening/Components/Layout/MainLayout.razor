@@ -1,6 +1,14 @@
-﻿
-@namespace AccountOpening.Components.Layout
+﻿@namespace AccountOpening.Components.Layout
 @inherits LayoutComponentBase
+
+@using AccountOpening.Models
+
+    <div class="progress-bar-container fixed-progress-bar">
+        <div class="progress-bar">
+            <div class="progress-bar-fill" style="width:@GetProgressPercent()"></div>
+            <span class="progress-fire" style="left:calc(@GetProgressPercent() - 16px);">🔥</span>
+        </div>
+    </div>
 
 <div class="page">
     <div class="sidebar">
@@ -8,10 +16,6 @@
     </div>
 
     <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-        </div>
-
         <article class="content px-4">
             @Body
         </article>
@@ -23,3 +27,34 @@
     <a href="." class="reload">Reload</a>
     <span class="dismiss">🗙</span>
 </div>
+
+@code {
+    [CascadingParameter]
+    public AccountOpeningForm? FormData { get; set; }
+
+    private int GetCurrentStep()
+    {
+        if (FormData == null) return 1;
+        if (!string.IsNullOrEmpty(FormData.FirstName) && !string.IsNullOrEmpty(FormData.LastName))
+        {
+            if (!string.IsNullOrEmpty(FormData.AddressLine1) && !string.IsNullOrEmpty(FormData.City) && !string.IsNullOrEmpty(FormData.State))
+            {
+                return 3;
+            }
+            return 2;
+        }
+        return 1;
+    }
+
+    private string GetProgressPercent()
+    {
+        var step = GetCurrentStep();
+        return step switch
+        {
+            1 => "33%",
+            2 => "66%",
+            3 => "100%",
+            _ => "0%"
+        };
+    }
+}

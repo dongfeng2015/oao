@@ -63,8 +63,6 @@
 /Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/compressed/a30uymhtir-h1s4sie4z3.gz
 /Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/compressed/3gl9656f3i-63fj8s7r0e.gz
 /Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/compressed/yz38w7arv9-0j3bgjxly4.gz
-/Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/compressed/b9b3gfotv6-ml6q7zt2h1.gz
-/Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/compressed/j4wfifbquf-ml6q7zt2h1.gz
 /Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/staticwebassets.build.json
 /Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/staticwebassets.development.json
 /Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/staticwebassets.build.endpoints.json
@@ -79,3 +77,5 @@
 /Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/AccountOpening.pdb
 /Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/AccountOpening.genruntimeconfig.cache
 /Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/ref/AccountOpening.dll
+/Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/compressed/b9b3gfotv6-n4d2bx9pjl.gz
+/Users/Dong/Alloy-App/oao/AlloyApplication/AccountOpening/obj/Debug/net9.0/compressed/j4wfifbquf-n4d2bx9pjl.gz

@@ -1,14 +1,10 @@
+@using AccountOpening.Models
 @namespace AccountOpening.Components.Layout
 @using Microsoft.AspNetCore.Components.Routing
-@using AccountOpening.Models
+@using Microsoft.AspNetCore.Components
 
 <div class="nav-scrollable">
     <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
         <div class="nav-section px-3">
             <h3>Account Opening</h3>
             <div class="nav-item">
@@ -37,7 +33,6 @@
     private bool IsStepAccessible(int step)
     {
         if (FormData == null) return step == 1;
-        
         return step switch
         {
             1 => true,
