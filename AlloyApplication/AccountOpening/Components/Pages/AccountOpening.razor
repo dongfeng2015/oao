@@ -1,9 +1,13 @@
 @page "/account-opening"
-@namespace AccountOpening.Web.Pages
+@using Microsoft.AspNetCore.Components.Web
 @using Microsoft.AspNetCore.Components.Forms
+@namespace AccountOpening.Web.Pages
 @using Microsoft.AspNetCore.Components
 @using System.Net.Http
 @using System.ComponentModel.DataAnnotations
+@using System.Linq.Expressions
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+@using Microsoft.AspNetCore.Components.Routing
 
 <PageTitle>Open Account</PageTitle>
 
@@ -14,10 +18,10 @@
         {
             <div class="form-step">
                 <label>First Name</label>
-                <InputText @bind-Value="formData.FirstName" class="form-input" />
+                <InputText @bind-Value="formData.FirstName" class="form-input" @attributes="GetInputClass(() => formData.FirstName)" />
                 <ValidationMessage For="@(() => formData.FirstName)" />
                 <label>Last Name</label>
-                <InputText @bind-Value="formData.LastName" class="form-input" />
+                <InputText @bind-Value="formData.LastName" class="form-input" @attributes="GetInputClass(() => formData.LastName)" />
                 <ValidationMessage For="@(() => formData.LastName)" />
                 <button type="button" class="next-btn" @onclick="NextStepAsync" disabled="@(isSubmitting)">Next</button>
             </div>
@@ -89,56 +93,84 @@
     private bool isSubmitting = false;
     private string? submitError;
 
-    private EditContext editContext;
+    private EditContext editContext = new EditContext(new AccountOpeningForm());
 
     protected override void OnInitialized()
     {
         editContext = new EditContext(formData);
     }
 
-    private async Task NextStepAsync()
+    private Dictionary<string, object> GetInputClass(Expression<Func<object>> field)
     {
-        submitError = null;
-        // Validate inputs for the current step
+        var isInvalid = editContext.GetValidationMessages(field).Any();
+        return isInvalid ? new Dictionary<string, object> { ["class"] = "form-input input-invalid" } : new Dictionary<string, object>();
+    }
+
+   private async Task NextStepAsync()
+{
+    submitError = null;
+
+    // Step 1: Validate only the name fields
+    if (step == 1)
+    {
+        // Trigger validation messages on those two fields
+        if (string.IsNullOrWhiteSpace(formData.FirstName))
+            editContext.NotifyFieldChanged(new FieldIdentifier(formData, nameof(formData.FirstName)));
+        if (string.IsNullOrWhiteSpace(formData.LastName))
+            editContext.NotifyFieldChanged(new FieldIdentifier(formData, nameof(formData.LastName)));
+
+        // If either is blank, bail out
+        if (string.IsNullOrWhiteSpace(formData.FirstName) ||
+            string.IsNullOrWhiteSpace(formData.LastName))
+        {
+            return;
+        }
+
+        step++;
+        return;
+    }
+
+    // Step 2: Validate all address inputs
+    if (step == 2)
+    {
         if (!editContext.Validate())
             return;
 
-        // For steps 1 and 2, just advance without calling the API
-        if (step < 3)
+        // Ensure country is set before moving on
+        formData.Country = "US";
+
+        step++;
+        return;
+    }
+
+    // Step 3: Persist via API then advance
+    isSubmitting = true;
+    try
+    {
+        if (Http is null)
         {
-            if (step == 2)
-                formData.Country = "US";
-            step++;
+            submitError = "HttpClient is not available.";
             return;
         }
 
-        // For step 3, save via API then advance
-        isSubmitting = true;
-        try
+        var saveResponse = await Http.PostAsJsonAsync("api/accountopening/save", formData);
+        if (!saveResponse.IsSuccessStatusCode)
         {
-            if (Http is null)
-            {
-                submitError = "HttpClient is not available.";
-                return;
-            }
-            var saveResponse = await Http.PostAsJsonAsync("api/accountopening/save", formData);
-            if (!saveResponse.IsSuccessStatusCode)
-            {
-                submitError = "Save failed. Please try again.";
-                return;
-            }
-            // Proceed to final confirmation step
-            step++;
+            submitError = "Save failed. Please try again.";
+            return;
         }
-        catch (Exception ex)
-        {
-            submitError = $"Error: {ex.Message}";
-        }
-        finally
-        {
-            isSubmitting = false;
-        }
+
+        step++;
     }
+    catch (Exception ex)
+    {
+        submitError = $"Error: {ex.Message}";
+    }
+    finally
+    {
+        isSubmitting = false;
+    }
+}
 
     private void PrevStep()
     {

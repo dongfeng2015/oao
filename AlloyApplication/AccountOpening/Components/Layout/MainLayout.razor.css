@@ -223,3 +223,8 @@ article.content {
     transition: left 0.3s ease;
     z-index: 3;
 }
+
+.input-invalid {
+    border: 2px solid #d32f2f !important;
+    background: #fff0f0;
+}
