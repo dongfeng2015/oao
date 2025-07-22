@@ -4,11 +4,11 @@ WORKDIR /app
 
 # Copy project file
 COPY AccountOpening.csproj .
-RUN dotnet restore
+RUN dotnet restore AccountOpening.csproj
 
 # Copy source code and publish
 COPY . .
-RUN dotnet publish -c Release -o out
+RUN dotnet publish AccountOpening.csproj -c Release -o out
 
 # Runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:9.0

@@ -7,10 +7,13 @@ This guide provides instructions for deploying the AccountOpening Blazor applica
 ### Issue: "AccountOpening.sln not found" Error
 This typically occurs when cloud build systems handle file paths differently than local Docker builds.
 
+### Issue: "Specify a project or solution file" Error  
+This happens when wildcard patterns (`*.csproj`) don't work in cloud build environments.
+
 **Solution Options:**
 
 1. **Use the main Dockerfile** (recommended for most platforms)
-   - Uses `*.csproj` wildcards instead of specific file names
+   - Uses explicit file names instead of wildcards
    - Doesn't depend on solution files
    - Better caching with project file separation
 
@@ -86,6 +89,12 @@ ALLOY_WORKFLOW_TOKEN=your-token-here
 1. Try `Dockerfile.simple` first
 2. Check that all required files are in the build context
 3. Verify .dockerignore isn't excluding necessary files
+4. If you see "Specify a project or solution file", the main Dockerfile should now work
+
+### If build fails with wildcard issues:
+1. The main Dockerfile now uses explicit file names
+2. Ensure `AccountOpening.csproj` exists in the build context
+3. Try `Dockerfile.simple` as a fallback
 
 ### If the app starts but doesn't work:
 1. Check environment variables are set correctly
