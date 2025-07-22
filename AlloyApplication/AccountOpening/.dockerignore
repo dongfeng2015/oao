@@ -53,6 +53,21 @@ node_modules/
 README.md
 
 # Docker
+Dockerfile.*
+docker-compose*
+.dockerignore
+
+# Environment files
+.env*
+
+# Documentation
+*.md
+DOCKER.md
+.git
+.gitignore
+README.md
+
+# Docker
 Dockerfile*
 docker-compose*
 .dockerignore
