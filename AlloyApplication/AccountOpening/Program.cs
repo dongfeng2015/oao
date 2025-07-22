@@ -7,6 +7,9 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddHttpClient();
 
+// Add health checks
+builder.Services.AddHealthChecks();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -19,10 +22,13 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-
 app.UseAntiforgery();
 
 app.UseStaticFiles();
+
+// Add health check endpoint
+app.MapHealthChecks("/health");
+
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 

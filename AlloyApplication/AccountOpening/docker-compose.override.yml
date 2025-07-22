@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  accountopening:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_LOGGING__LOGLEVEL__DEFAULT=Information
+      - ASPNETCORE_LOGGING__LOGLEVEL__MICROSOFT=Warning
+    ports:
+      - "5000:8080"
+    volumes:
+      - ./appsettings.Development.json:/app/appsettings.Development.json:ro
+    restart: "no"
