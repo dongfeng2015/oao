@@ -165,8 +165,8 @@
                 return;
             }
 
-            // Get API key from configuration and encode to base64 for API request
-            var apiKey = Configuration["Alloy:ApiKey"];
+            // Get API key from environment variables first, fallback to configuration
+            var apiKey = Configuration["ALLOY_API_KEY"] ?? Configuration["Alloy:ApiKey"];
             if (string.IsNullOrEmpty(apiKey))
             {
                 submitError = "Alloy API key not configured.";
@@ -175,7 +175,7 @@
             }
 
             var encodedApiKey = Convert.ToBase64String(Encoding.UTF8.GetBytes(apiKey));
-            var baseUrl = Configuration["Alloy:BaseUrl"] ?? "https://sandbox.alloy.co/v1/";
+            var baseUrl = Configuration["ALLOY_BASE_URL"] ?? Configuration["Alloy:BaseUrl"] ?? "https://sandbox.alloy.co/v1/";
 
             // Transform to Alloy's expected format
             var alloyPayload = new

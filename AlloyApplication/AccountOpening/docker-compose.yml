@@ -11,7 +11,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:8080
       # Override Alloy settings via environment variables
-      - Alloy__ApiKey=${ALLOY_API_KEY:-Mxfw1tAdbTc1HiGuIDg2utwyak0lYK8D:TCS6crwXIQxsPBsfV6CRljC21h17Qzrq}
+      - Alloy__ApiKey=${ALLOY_API_KEY:-default_value}
       - Alloy__BaseUrl=${ALLOY_BASE_URL:-https://sandbox.alloy.co/v1/}
     restart: unless-stopped
     healthcheck:
