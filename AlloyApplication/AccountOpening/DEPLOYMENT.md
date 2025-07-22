@@ -10,17 +10,23 @@ This typically occurs when cloud build systems handle file paths differently tha
 ### Issue: "Specify a project or solution file" Error  
 This happens when wildcard patterns (`*.csproj`) don't work in cloud build environments.
 
+### Issue: "AccountOpening.csproj: not found" Error
+This occurs when the cloud build context doesn't include the project file, often due to:
+- Different directory structures in cloud git repositories
+- Build context issues with cloud platforms
+- File path case sensitivity differences
+
 **Solution Options:**
 
 1. **Use the main Dockerfile** (recommended for most platforms)
-   - Uses explicit file names instead of wildcards
-   - Doesn't depend on solution files
-   - Better caching with project file separation
+   - Copies all files at once to avoid missing file issues
+   - Uses simple `dotnet restore` and `dotnet publish` commands
+   - Most compatible with cloud build systems
 
-2. **Use Dockerfile.simple** for minimal cloud deployments
-   - Simplest possible Dockerfile
-   - Single-stage build process
-   - No solution file dependencies
+2. **Use Dockerfile.simple** for problematic cloud deployments
+   - Ultra-simple single-copy approach
+   - No explicit file references
+   - Best for platforms with build context issues
 
 3. **Use Dockerfile.cloud** for enterprise cloud platforms
    - Multi-stage build with explicit commands

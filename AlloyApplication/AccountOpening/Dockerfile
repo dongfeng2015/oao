@@ -2,13 +2,13 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /source
 
-# Copy project files and restore dependencies
-COPY AccountOpening.csproj ./
-RUN dotnet restore AccountOpening.csproj --verbosity minimal
-
-# Copy everything else and build
+# Copy everything and restore dependencies
 COPY . .
-RUN dotnet publish AccountOpening.csproj -c Release -o /app --no-restore
+RUN dotnet restore --verbosity minimal
+
+# Copy everything and build
+COPY . .
+RUN dotnet publish -c Release -o /app --no-restore
 
 # Use the official .NET 9.0 runtime image for running
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime

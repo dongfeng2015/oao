@@ -1,14 +1,10 @@
-# Simple cloud deployment Dockerfile - no solution file dependency
+# Ultra-simple cloud deployment Dockerfile
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /app
 
-# Copy project file
-COPY AccountOpening.csproj .
-RUN dotnet restore AccountOpening.csproj
-
-# Copy source code and publish
+# Copy everything and build in one step
 COPY . .
-RUN dotnet publish AccountOpening.csproj -c Release -o out
+RUN dotnet publish -c Release -o out
 
 # Runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:9.0
