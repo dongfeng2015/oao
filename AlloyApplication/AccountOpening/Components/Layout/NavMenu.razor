@@ -8,19 +8,19 @@
         <div class="nav-section px-3">
             <h3>Account Opening</h3>
             <div class="nav-item">
-                <NavLink href="account-opening" class=@($"nav-link {(IsStepAccessible(1) ? "" : "disabled")}")>
+                <span class=@($"nav-link {(IsStepAccessible(1) ? "" : "disabled")} {(CurrentStep == 1 ? "active" : "")}")>
                     <span class="bi bi-person-fill" aria-hidden="true"></span> Personal Info
-                </NavLink>
+                </span>
             </div>
             <div class="nav-item">
-                <NavLink href="account-opening" class=@($"nav-link {(IsStepAccessible(2) ? "" : "disabled")}")>
+                <span class=@($"nav-link {(IsStepAccessible(2) ? "" : "disabled")} {(CurrentStep == 2 ? "active" : "")}")>
                     <span class="bi bi-geo-alt-fill" aria-hidden="true"></span> Address
-                </NavLink>
+                </span>
             </div>
             <div class="nav-item">
-                <NavLink href="account-opening" class=@($"nav-link {(IsStepAccessible(3) ? "" : "disabled")}")>
+                <span class=@($"nav-link {(IsStepAccessible(3) ? "" : "disabled")} {(CurrentStep == 3 ? "active" : "")}")>
                     <span class="bi bi-shield-fill" aria-hidden="true"></span> Identity
-                </NavLink>
+                </span>
             </div>
         </div>
     </nav>
@@ -30,15 +30,19 @@
     [CascadingParameter]
     public AccountOpeningForm? FormData { get; set; }
 
+    [CascadingParameter(Name = "CurrentStep")]
+    public int CurrentStep { get; set; } = 1;
+
     private bool IsStepAccessible(int step)
     {
         if (FormData == null) return step == 1;
-        return step switch
+        var result = step switch
         {
             1 => true,
             2 => !string.IsNullOrEmpty(FormData.FirstName) && !string.IsNullOrEmpty(FormData.LastName),
             3 => !string.IsNullOrEmpty(FormData.AddressLine1) && !string.IsNullOrEmpty(FormData.City) && !string.IsNullOrEmpty(FormData.State),
             _ => false
         };
+        return result;
     }
 }

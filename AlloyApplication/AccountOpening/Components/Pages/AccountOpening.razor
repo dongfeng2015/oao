@@ -1,69 +1,80 @@
 @page "/account-opening"
+@rendermode Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveServer
+
 @using Microsoft.AspNetCore.Components.Web
 @using Microsoft.AspNetCore.Components.Forms
-@namespace AccountOpening.Web.Pages
 @using Microsoft.AspNetCore.Components
 @using System.Net.Http
 @using System.ComponentModel.DataAnnotations
 @using System.Linq.Expressions
 @using Microsoft.AspNetCore.Components.Web.Virtualization
 @using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.Extensions.Options
+@using Microsoft.Extensions.Configuration
+@using System.Text
+@using System.Text.Json
 
 <PageTitle>Open Account</PageTitle>
 
+<div class="progress-bar-container fixed-progress-bar">
+    <div class="progress-bar">
+        <div class="progress-bar-fill" style="width:@GetProgressPercent()"></div>
+        <span class="progress-fire" style="left:calc(@GetProgressPercent() - 16px);">🔥</span>
+    </div>
+</div>
+
+<CascadingValue Value="@step" Name="CurrentStep">
+<CascadingValue Value="@formData">
 <div class="account-opening-form">
-    <EditForm EditContext="@editContext">
-        <DataAnnotationsValidator />
+    <div>
         @if (step == 1)
         {
             <div class="form-step">
                 <label>First Name</label>
-                <InputText @bind-Value="formData.FirstName" class="form-input" @attributes="GetInputClass(() => formData.FirstName)" />
-                <ValidationMessage For="@(() => formData.FirstName)" />
+                <input @bind="formData.FirstName" class="form-input" />
                 <label>Last Name</label>
-                <InputText @bind-Value="formData.LastName" class="form-input" @attributes="GetInputClass(() => formData.LastName)" />
-                <ValidationMessage For="@(() => formData.LastName)" />
-                <button type="button" class="next-btn" @onclick="NextStepAsync" disabled="@isSubmitting">Next</button>
+                <input @bind="formData.LastName" class="form-input" />
+                <button class="next-btn" @onclick="NextStepAsync">Next</button>
+                @if (!string.IsNullOrEmpty(submitError))
+                {
+                    <p class="text-danger">@submitError</p>
+                }
             </div>
         }
         else if (step == 2)
         {
             <div class="form-step">
                 <label>Address Line 1</label>
-                <InputText @bind-Value="formData.AddressLine1" class="form-input" />
-                <ValidationMessage For="@(() => formData.AddressLine1)" />
+                <input @bind="formData.AddressLine1" class="form-input" />
                 <label>Address Line 2</label>
-                <InputText @bind-Value="formData.AddressLine2" class="form-input" />
+                <input @bind="formData.AddressLine2" class="form-input" />
                 <label>City</label>
-                <InputText @bind-Value="formData.City" class="form-input" />
-                <ValidationMessage For="@(() => formData.City)" />
+                <input @bind="formData.City" class="form-input" />
                 <label>State (2-letter code)</label>
-                <InputText @bind-Value="formData.State" class="form-input" maxlength="2" />
-                <ValidationMessage For="@(() => formData.State)" />
+                <input @bind="formData.State" class="form-input" maxlength="2" />
                 <label>Zip/Postal Code</label>
-                <InputText @bind-Value="formData.ZipCode" class="form-input" />
-                <ValidationMessage For="@(() => formData.ZipCode)" />
+                <input @bind="formData.ZipCode" class="form-input" />
                 <label>Country</label>
-                <InputText @bind-Value="formData.Country" class="form-input" readonly />
-                <ValidationMessage For="@(() => formData.Country)" />
-                <button type="button" class="prev-btn" @onclick="PrevStep">Back</button>
-                <button type="button" class="next-btn" @onclick="NextStepAsync" disabled="@isSubmitting">Next</button>
+                <input @bind="formData.Country" class="form-input" readonly />
+                <div class="button-container">
+                    <button type="button" class="prev-btn" @onclick="OnPrevStep">Back</button>
+                    <button type="button" class="next-btn" @onclick="NextStepAsync">Next</button>
+                </div>
             </div>
         }
         else if (step == 3)
         {
             <div class="form-step">
                 <label>SSN (9 digits, no dashes)</label>
-                <InputText @bind-Value="formData.SSN" class="form-input" maxlength="9" />
-                <ValidationMessage For="@(() => formData.SSN)" />
+                <input @bind="formData.SSN" class="form-input" maxlength="9" />
                 <label>Email Address</label>
-                <InputText @bind-Value="formData.Email" class="form-input" />
-                <ValidationMessage For="@(() => formData.Email)" />
+                <input type="email" @bind="formData.Email" class="form-input" />
                 <label>Date of Birth (YYYY-MM-DD)</label>
-                <InputText @bind-Value="formData.DateOfBirth" class="form-input" placeholder="YYYY-MM-DD" />
-                <ValidationMessage For="@(() => formData.DateOfBirth)" />
-                <button type="button" class="prev-btn" @onclick="PrevStep">Back</button>
-                <button type="button" class="submit-btn" @onclick="SubmitFormAsync" disabled="@isSubmitting">Submit</button>
+                <input type="text" @bind="formData.DateOfBirth" class="form-input" placeholder="YYYY-MM-DD" />
+                <div class="button-container">
+                    <button type="button" class="prev-btn" @onclick="OnPrevStep">Back</button>
+                    <button type="button" class="submit-btn" @onclick="SubmitFormAsync">Submit</button>
+                </div>
                 @if (isSubmitting)
                 {
                     <p>Submitting...</p>
@@ -77,130 +88,145 @@
         else if (step == 4)
         {
             <div class="form-step">
-                <h3>Thank you!</h3>
-                <p>Your application has been submitted.</p>
+                @if (applicationOutcome == "Approved")
+                {
+                    <h3>🎉 Success!</h3>
+                    <p>Congratulations! You have successfully created an account with our service.</p>
+                    <p>Welcome to the family! Your account is ready to go. 🚀</p>
+                }
+                else if (applicationOutcome == "Manual Review")
+                {
+                    <h3>📋 Application Received</h3>
+                    <p>Thanks for submitting your application, we'll be in touch shortly!</p>
+                    <p>Our team is carefully reviewing your information. You can expect to hear from us within 1-2 business days. ⏰</p>
+                }
+                else if (applicationOutcome == "Denied")
+                {
+                    <h3>😔 Application Update</h3>
+                    <p>Sorry, your application was not successful at this time.</p>
+                    <p>We appreciate your interest and encourage you to reach out to our support team if you have any questions about this decision. 💬</p>
+                }
+                else
+                {
+                    <h3>✅ Application Submitted</h3>
+                    <p>Your application has been submitted and is being processed.</p>
+                    @if (!string.IsNullOrEmpty(applicationOutcome))
+                    {
+                        <p><strong>Status:</strong> @applicationOutcome</p>
+                    }
+                }
             </div>
         }
-    </EditForm>
+    </div>
 </div>
+</CascadingValue>
+</CascadingValue>
 
 @code {
     [Inject]
     private HttpClient? Http { get; set; }
 
+    [Inject]
+    private IConfiguration? Configuration { get; set; }
+
     private int step = 1;
     private AccountOpeningForm formData = new AccountOpeningForm();
     private bool isSubmitting = false;
     private string? submitError;
+    private string? applicationOutcome;
 
-    private EditContext editContext = new EditContext(new AccountOpeningForm());
-
-    protected override void OnInitialized()
+    
+    private async Task NextStepAsync()
     {
-        editContext = new EditContext(formData);
-    }
-
-    private Dictionary<string, object> GetInputClass(Expression<Func<object>> field)
-    {
-        var isInvalid = editContext.GetValidationMessages(field).Any();
-        return isInvalid ? new Dictionary<string, object> { ["class"] = "form-input input-invalid" } : new Dictionary<string, object>();
-    }
-
-   private async Task NextStepAsync()
-{
-    submitError = null;
-
-    // Step 1: Validate only the name fields
-    if (step == 1)
-    {
-        // Trigger validation messages on those two fields
-        if (string.IsNullOrWhiteSpace(formData.FirstName))
-            editContext.NotifyFieldChanged(new FieldIdentifier(formData, nameof(formData.FirstName)));
-        if (string.IsNullOrWhiteSpace(formData.LastName))
-            editContext.NotifyFieldChanged(new FieldIdentifier(formData, nameof(formData.LastName)));
-
-        // If either is blank, bail out
-        if (string.IsNullOrWhiteSpace(formData.FirstName) ||
-            string.IsNullOrWhiteSpace(formData.LastName))
+        Console.WriteLine($"NextStepAsync called, current step: {step}");
+        // Move to next step, submit at final
+        if (step < 3)
         {
-            return;
+            step++;
+            Console.WriteLine($"Step incremented to: {step}");
+            StateHasChanged();
+        }
+        else if (step == 3)
+        {
+            await SubmitFormAsync();
         }
 
-        step++;
-        return;
     }
-
-    // Step 2: Validate all address inputs
-    if (step == 2)
-    {
-        if (!editContext.Validate())
-            return;
-
-        // Ensure country is set before moving on
-        formData.Country = "US";
-
-        step++;
-        return;
-    }
-
-    // Step 3: Persist via API then advance
-    isSubmitting = true;
-    try
-    {
-        if (Http is null)
-        {
-            submitError = "HttpClient is not available.";
-            return;
-        }
-
-        var saveResponse = await Http.PostAsJsonAsync("api/accountopening/save", formData);
-        if (!saveResponse.IsSuccessStatusCode)
-        {
-            submitError = "Save failed. Please try again.";
-            return;
-        }
-
-        step++;
-    }
-    catch (Exception ex)
-    {
-        submitError = $"Error: {ex.Message}";
-    }
-    finally
-    {
-        isSubmitting = false;
-    }
-}
-
-    private void PrevStep()
-    {
-        if (step > 1)
-        {
-            step--;
-        }
-    }
-
     private async Task SubmitFormAsync()
     {
         isSubmitting = true;
         submitError = null;
         try
         {
-            if (Http is null)
+            if (Http is null || Configuration is null)
             {
-                submitError = "HttpClient is not available.";
+                submitError = "HttpClient or Configuration is not available.";
                 isSubmitting = false;
                 return;
             }
-            // Replace with your API endpoint
-            var response = await Http.PostAsJsonAsync("api/accountopening", formData);
+
+            // Get API key from configuration and encode to base64 for API request
+            var apiKey = Configuration["Alloy:ApiKey"];
+            if (string.IsNullOrEmpty(apiKey))
+            {
+                submitError = "Alloy API key not configured.";
+                isSubmitting = false;
+                return;
+            }
+
+            var encodedApiKey = Convert.ToBase64String(Encoding.UTF8.GetBytes(apiKey));
+            var baseUrl = Configuration["Alloy:BaseUrl"] ?? "https://sandbox.alloy.co/v1/";
+
+            // Transform to Alloy's expected format
+            var alloyPayload = new
+            {
+                name_first = formData.FirstName,
+                name_last = formData.LastName,
+                address_line_1 = formData.AddressLine1,
+                address_line_2 = formData.AddressLine2,
+                address_city = formData.City,
+                address_state = formData.State,
+                address_postal_code = formData.ZipCode,
+                address_country_code = "US",
+                document_ssn = formData.SSN,
+                email_address = formData.Email,
+                birth_date = formData.DateOfBirth,
+            };
+
+            // Configure headers for Alloy API
+            Http.DefaultRequestHeaders.Clear();
+            Http.DefaultRequestHeaders.Add("Authorization", $"Basic {encodedApiKey}");
+            
+            var response = await Http.PostAsJsonAsync($"{baseUrl}evaluations/", alloyPayload);
+            
+            var responseContent = await response.Content.ReadAsStringAsync();
+            
             if (response.IsSuccessStatusCode)
             {
-                step = 4;
+                try
+                {
+                    // Parse the JSON response to get the outcome
+                    using var jsonDoc = JsonDocument.Parse(responseContent);
+                    if (jsonDoc.RootElement.TryGetProperty("summary", out var summaryElement) &&
+                        summaryElement.TryGetProperty("outcome", out var outcomeElement))
+                    {
+                        applicationOutcome = outcomeElement.GetString();
+                        step = 4;
+                        submitError = "";
+                    }
+                    else
+                    {
+                        submitError = "Invalid response format from Alloy API.";
+                    }
+                }
+                catch (JsonException)
+                {
+                    submitError = "Failed to parse response from Alloy API.";
+                }
             }
             else
             {
-                submitError = "Submission failed. Please try again.";
+                submitError = $"Submission failed. Status: {response.StatusCode}, Response: {responseContent}";
             }
         }
         catch (Exception ex)
@@ -208,6 +234,35 @@
             submitError = $"Error: {ex.Message}";
         }
         isSubmitting = false;
+    }
+
+    private void OnPrevStep()
+    {
+        if (step > 1)
+        {
+            step--;
+        }
+    }
+
+    public void NavigateToStep(int targetStep)
+    {
+        if (targetStep >= 1 && targetStep <= 4)
+        {
+            step = targetStep;
+            StateHasChanged();
+        }
+    }
+
+    private string GetProgressPercent()
+    {
+        return step switch
+        {
+            1 => "0%",
+            2 => "33%", 
+            3 => "66%",
+            4 => "100%",
+            _ => "0%"
+        };
     }
 
     public class AccountOpeningForm

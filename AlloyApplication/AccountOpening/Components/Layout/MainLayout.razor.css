@@ -49,7 +49,10 @@ main {
     align-items: center;
     justify-content: flex-start;
     height: 100vh;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-left: 260px;
+    padding-top: 40px;
 }
 
 .top-row {
@@ -87,13 +90,14 @@ article.content {
     background: #fff;
     color: #111;
     font-weight: 500;
-    padding: 2rem;
     width: 100%;
     max-width: 600px;
-    margin: 2rem auto;
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-height: calc(100vh - 80px);
+    padding: 2rem;
+    padding-bottom: 6rem;
 }
 
 /* Buttons */
@@ -165,63 +169,6 @@ article.content {
     position: absolute;
     right: 0.75rem;
     top: 0.5rem;
-}
-
-/* Progress Bar Styles */
-.progress-bar-container {
-    width: 100%;
-    padding: 0;
-    background: transparent;
-    display: flex;
-    justify-content: center;
-    position: relative;
-    top: 0;
-    left: 0;
-    z-index: 100;
-}
-
-.fixed-progress-bar {
-    position: fixed;
-    top: 0;
-    left: 260px;
-    width: calc(100% - 260px);
-    background: transparent;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    z-index: 2000;
-}
-
-.progress-bar {
-    width: 40%;
-    height: 20px;
-    background: #eee;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
-    margin: 0 auto;
-}
-
-.progress-bar-fill {
-    height: 100%;
-    background: #FFD600;
-    transition: width 0.3s ease;
-    position: absolute;
-    left: 0;
-    top: 0;
-    border-radius: 10px 0 0 10px;
-    z-index: 2;
-}
-
-.progress-fire {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 2rem;
-    pointer-events: none;
-    transition: left 0.3s ease;
-    z-index: 3;
 }
 
 .input-invalid {

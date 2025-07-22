@@ -3,16 +3,9 @@
 
 @using AccountOpening.Models
 
-    <div class="progress-bar-container fixed-progress-bar">
-        <div class="progress-bar">
-            <div class="progress-bar-fill" style="width:@GetProgressPercent()"></div>
-            <span class="progress-fire" style="left:calc(@GetProgressPercent() - 16px);">🔥</span>
-        </div>
-    </div>
-
 <div class="page">
     <div class="sidebar">
-        <NavMenu />
+        <AccountOpening.Components.Layout.NavMenu />
     </div>
 
     <main>
@@ -29,32 +22,4 @@
 </div>
 
 @code {
-    [CascadingParameter]
-    public AccountOpeningForm? FormData { get; set; }
-
-    private int GetCurrentStep()
-    {
-        if (FormData == null) return 1;
-        if (!string.IsNullOrEmpty(FormData.FirstName) && !string.IsNullOrEmpty(FormData.LastName))
-        {
-            if (!string.IsNullOrEmpty(FormData.AddressLine1) && !string.IsNullOrEmpty(FormData.City) && !string.IsNullOrEmpty(FormData.State))
-            {
-                return 3;
-            }
-            return 2;
-        }
-        return 1;
-    }
-
-    private string GetProgressPercent()
-    {
-        var step = GetCurrentStep();
-        return step switch
-        {
-            1 => "33%",
-            2 => "66%",
-            3 => "100%",
-            _ => "0%"
-        };
-    }
 }
